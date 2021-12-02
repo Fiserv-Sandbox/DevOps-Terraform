@@ -4,20 +4,16 @@ on: [workflow_dispatch]
 
 defaults:
   run:
-    working-directory: ./testlab
+    working-directory: ./Testlab
 
 jobs:
   terraform:
     runs-on: ubuntu-latest
 
-    env:
-      ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
-      ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
-      ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
-      ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
-
-    steps:
-      - uses: actions/checkout@v2
+      steps:
+      - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.ARM_AZURE_CREDENTIALS }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
